@@ -19,13 +19,13 @@ Document Title and First Page:
 - Use `#` for the document title only
 - For Vietnamese administrative documents, combine all centered text into the title block:
   * The title block has a Type subblock and a Subject subblock
-  * First line, in ALL CAPS, is the document type (BÁO CÁO, QUYẾT ĐỊNH, etc.)
+  * First line, in ALL CAPS, is the document type (BÁO CÁO, QUYẾT ĐỊNH, PHỤ LỤC, etc.)
   * After that, ALL centered lines is the document Subject subblock
   * The document Subject is NEVER empty
-  * Title = DOCUMENT TYPE + document Subject
-  * Title example 1: '#BÁO CÁO Kế hoạch thực hiện Quy hoạch phát triển điện lực quốc gia thời kỳ 2021-2030, tầm nhìn đến năm 2050'
-  * Title example 2 : '#QUYẾT ĐỊNH Phê duyệt bổ sung, cập nhật Kế hoạch thực hiện Quy hoạch phát triển điện lực quốc gia thời kỳ 2021 - 2030, tầm nhìn đến năm 2050'
-  * Title example 3: '#TỜ TRÌNH Đề nghị ban hành bổ sung, cập nhật Kế hoạch thực hiện Quy hoạch phát triển điện lực quốc gia thời kỳ 2021-2030, tầm nhìn đến năm 2050'
+  * Title = DOCUMENT TYPE + <br> + document Subject
+  * Title example 1: '#BÁO CÁO <br> Kế hoạch thực hiện Quy hoạch phát triển điện lực quốc gia thời kỳ 2021-2030, tầm nhìn đến năm 2050'
+  * Title example 2 : '#QUYẾT ĐỊNH <br> Phê duyệt bổ sung, cập nhật Kế hoạch thực hiện Quy hoạch phát triển điện lực quốc gia thời kỳ 2021 - 2030, tầm nhìn đến năm 2050'
+  * Title example 3: '#TỜ TRÌNH <br> Đề nghị ban hành bổ sung, cập nhật Kế hoạch thực hiện Quy hoạch phát triển điện lực quốc gia thời kỳ 2021-2030, tầm nhìn đến năm 2050'
 - Format letterhead elements on the first page (institution, tagline, date, reference) as plain text with bold/italic
 - Print letterhead elements before the title
 
@@ -41,10 +41,11 @@ Content Structure:
 - Fix OCR errors
 - Include all text except page numbers
 - Format footnotes as [^X] in text, [^X]: at bottom
-- Detect and isolate tables:
-    Convert each table to properly formatted HTML tables with <table>
-    Preserve table structure and formatting
-    Handle complex tables organized in sections
+
+Tables:
+- Convert tables to properly formatted HTML with <table>
+- Preserve table structure and formatting
+- Handle complex tables organized in sections
 """
 
 
@@ -52,7 +53,6 @@ USER_PROMPT = """Here is the Markdown from the previous page (if empty, this is 
 {}
 
 Now, convert the following base64-encoded page to Markdown, without adding explanations or comments.
-If the page is blank, answer with a single `&nbsp;` 
 Limit your response to the image content, without repeating the text above."""
 
 def pdf_to_markdown_with_gptvision(pdf_path):
@@ -84,6 +84,8 @@ def pdf_to_markdown_with_gptvision(pdf_path):
         images = convert_from_path(pdf_path, dpi=300, fmt="jpeg")
     except Exception as e:
         raise RuntimeError(f"Error converting PDF to images: {str(e)}")
+
+    # TODO: Check if there are many blank pages
 
     markdown_pieces = []
     previous_page_markdown = ""
@@ -151,10 +153,8 @@ def pdf_to_markdown_with_gptvision(pdf_path):
             if os.path.exists(temp_image_path):
                 os.remove(temp_image_path)
 
-    # TODO: Multi-page coherence:
-    #   multi-page tables
-    #   footnote numbering
-    #   include page numbers for RAG ?
+    # TODO: Handle multi-page tables
+    # MAYBE:  include page numbers for RAG ?
 
     output_path = pdf_path.replace(".pdf", ".md")
     if os.path.exists(output_path):
