@@ -1,3 +1,5 @@
+# Warning: make does not handle filenames containing the space character.
+
 TEST_PDFS = $(wildcard test/*.pdf)
 PROD_PDFS = $(wildcard prod/*.pdf)
 

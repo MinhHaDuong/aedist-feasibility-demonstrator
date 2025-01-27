@@ -10,7 +10,7 @@ import base64
 from pdf2image import convert_from_path
 from openai import OpenAI
 
-MODEL = "gpt-4o"  # "gpt-4o-mini" is insufficient
+MODEL = "gpt-4o"
 
 SYSTEM_PROMPT = """You are an assistant that converts PDF page images to structured Markdown text.
 Follow these rules:
@@ -44,8 +44,10 @@ Content Structure:
 
 Tables:
 - Convert tables to properly formatted HTML with <table>
+- NEVER use Markdown syntax for a table
 - Preserve table structure and formatting
 - Handle complex tables organized in sections
+- Use the <caption> tag if the document captions the table
 """
 
 
@@ -135,7 +137,12 @@ def pdf_to_markdown_with_gptvision(pdf_path):
                 assistant_message = response.choices[0].message
                 if assistant_message and hasattr(assistant_message, "content"):
                     markdown_text = assistant_message.content
-                    markdown_text = markdown_text.replace("```markdown", "").replace("```", "")
+
+                    markdown_text = re.sub(r'^```(?:markdown|html)?[ \t]*\n', '', markdown_text)  # Remove opening code block
+                    markdown_text = re.sub(r'\n```[ \t]*$', '', markdown_text)  # Remove closing code block
+
+                    page_number_comment = f"<!-- PDF page {page_num + 1} -->\n\n"
+                    markdown_text = page_number_comment + markdown_text
 
                     markdown_pieces.append(markdown_text)
                     print(f"Page {page_num + 1}/{len(images)} converted successfully.")
@@ -152,9 +159,6 @@ def pdf_to_markdown_with_gptvision(pdf_path):
         finally:
             if os.path.exists(temp_image_path):
                 os.remove(temp_image_path)
-
-    # TODO: Handle multi-page tables
-    # MAYBE:  include page numbers for RAG ?
 
     output_path = pdf_path.replace(".pdf", ".md")
     if os.path.exists(output_path):
