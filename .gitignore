@@ -24,3 +24,29 @@ dist/
 # Coverage
 .coverage
 htmlcov/
+
+# Sensitive files
+*.env
+*.local.json
+*secret*
+*token*
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Project-specific working directories
+pdfOCR2md/reserve/
+pdfOCR2md/prod/
+pdfOCR2md/test/
+pdfOCR2md/documentation/
+compare/attic/
+counttokens/
+create_kg/
+
+# OS
+.DS_Store
+Thumbs.db
