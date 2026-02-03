@@ -1,1 +1,23 @@
 CNRSGitlabToken.txt
+
+# Python caches / bytecode
+__pycache__/
+*.py[cod]
+
+# Type checker / test caches
+.mypy_cache/
+.pytest_cache/
+
+# Virtual envs
+venv/
+.venv/
+env/
+
+# Packaging / build
+build/
+dist/
+*.egg-info/
+
+# Coverage
+.coverage
+htmlcov/
