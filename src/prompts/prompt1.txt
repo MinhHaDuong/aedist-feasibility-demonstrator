@@ -1,0 +1,4 @@
+Provide a table listing all thermal power plants in Vietnam, including their
+fuel type (coal / local natural gas / imported LNG), construction stage,
+connection date (observed or planned COD), province, and generation capacity
+(in MWe). Format the response in CSV.

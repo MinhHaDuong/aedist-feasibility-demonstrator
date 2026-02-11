@@ -1,0 +1,68 @@
+# OpenRouter model registry for AEDIST experiments
+# id: OpenRouter model identifier
+# label: Display name for tables and report
+# size: Approximate parameter count
+
+- id: anthropic/claude-3.5-sonnet
+  label: Claude 3.5 Sonnet
+  size: "175B"
+
+- id: deepseek/deepseek-r1
+  label: DeepSeek-R1
+  size: "671B"
+
+- id: google/gemini-2.0-flash-001
+  label: Gemini 2 Flash
+  size: unknown
+
+- id: google/gemini-2.5-pro
+  label: Gemini 2.5 Pro
+  size: unknown
+
+- id: openai/gpt-4o
+  label: GPT-4o
+  size: "200B"
+
+- id: openai/gpt-4o-mini
+  label: GPT-4o-mini
+  size: "8B"
+
+- id: openai/o1
+  label: o1
+  size: "200B"
+
+- id: openai/o3-mini
+  label: o3-mini
+  size: unknown
+
+- id: meta-llama/llama-3.3-70b-instruct
+  label: Llama 3.3 70B
+  size: "70B"
+
+- id: meta-llama/llama-3.1-405b-instruct
+  label: Llama 3.1 405B
+  size: "405B"
+
+- id: qwen/qwen-2.5-72b-instruct
+  label: Qwen 2.5 72B
+  size: "72B"
+
+- id: qwen/qwq-32b
+  label: QwQ 32B
+  size: "32B"
+
+- id: mistralai/mistral-large
+  label: Mistral Large
+  size: "123B"
+
+- id: x-ai/grok-3
+  label: Grok 3
+  size: unknown
+
+- id: perplexity/sonar-pro
+  label: Perplexity Pro
+  size: unknown
+
+- id: nvidia/llama-3.1-nemotron-70b-instruct
+  label: NVidia Nemotron 70B
+  size: "70B"
