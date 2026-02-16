@@ -93,7 +93,7 @@ def main():
 
     for model in models:
         model_id = model["id"]
-        label = model["label"]
+        label = model.get("name", model_id)
         print(f"Querying {label} ({model_id})...")
         try:
             result = query_model(client, model_id, prompt)
