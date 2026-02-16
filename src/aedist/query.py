@@ -13,6 +13,7 @@ Usage:
 import argparse
 import json
 import os
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import date
 from pathlib import Path
 
@@ -91,21 +92,34 @@ def main():
         if not models:
             raise SystemExit(f"Model {args.model} not found in {args.models}")
 
-    for model in models:
+    def query_and_save(model: dict) -> str:
         model_id = model["id"]
         label = model.get("name", model_id)
+        # Skip if already queried today
+        day_dir = output_dir / date.today().isoformat()
+        filepath = day_dir / (model_id.split("/")[-1] + ".json")
+        if filepath.exists():
+            return f"  ⏭ {label} (cached)"
         print(f"Querying {label} ({model_id})...")
         try:
             result = query_model(client, model_id, prompt)
             save_result(output_dir, model_id, prompt, result)
+            return f"  ✓ {label}"
         except Exception as e:
-            print(f"  Error: {e}")
+            print(f"  Error querying {label}: {e}")
             save_result(output_dir, model_id, prompt, {
                 "response": None,
                 "finish_reason": "error",
                 "error": str(e),
                 "usage": None,
             })
+            return f"  ✗ {label}: {e}"
+
+    workers = min(8, len(models))
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        futures = {pool.submit(query_and_save, m): m for m in models}
+        for future in as_completed(futures):
+            print(future.result())
 
 
 if __name__ == "__main__":
