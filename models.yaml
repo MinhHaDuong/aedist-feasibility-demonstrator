@@ -1,68 +1,135 @@
-# OpenRouter model registry for AEDIST experiments
-# id: OpenRouter model identifier
-# label: Display name for tables and report
-# size: Approximate parameter count
+# AEDIST Benchmark — Model Registry
+# 16 models, updated 2026-02-16
+# Panachage: US/CN/FR × SOTA→Edge × Open/Commercial
+# Based on OpenRouter Popularity and Speed rankings, with some manual curation to add Mistral.
+# OpenRouter IDs — use with: uv run python -m aedist.query
 
-- id: anthropic/claude-3.5-sonnet
-  label: Claude 3.5 Sonnet
-  size: "175B"
+# --- Frontier ---
 
-- id: deepseek/deepseek-r1
-  label: DeepSeek-R1
-  size: "671B"
+- id: anthropic/claude-sonnet-4.5
+  name: Claude Sonnet 4.5
+  provider: Anthropic
+  country: US
+  size_class: frontier
+  license: commercial
 
-- id: google/gemini-2.0-flash-001
-  label: Gemini 2 Flash
-  size: unknown
+- id: anthropic/claude-opus-4.6
+  name: Claude Opus 4.6
+  provider: Anthropic
+  country: US
+  size_class: frontier
+  license: commercial
 
-- id: google/gemini-2.5-pro
-  label: Gemini 2.5 Pro
-  size: unknown
+- id: google/gemini-3-flash-preview
+  name: Gemini 3 Flash
+  provider: Google
+  country: US
+  size_class: frontier
+  license: commercial
 
-- id: openai/gpt-4o
-  label: GPT-4o
-  size: "200B"
+- id: x-ai/grok-4.1-fast
+  name: Grok 4.1 Fast
+  provider: xAI
+  country: US
+  size_class: frontier
+  license: commercial
 
-- id: openai/gpt-4o-mini
-  label: GPT-4o-mini
-  size: "8B"
+- id: deepseek/deepseek-v3.2
+  name: DeepSeek V3.2
+  provider: DeepSeek
+  country: CN
+  params: 671B MoE
+  size_class: frontier
+  license: open-MIT
 
-- id: openai/o1
-  label: o1
-  size: "200B"
+# --- Large ---
 
-- id: openai/o3-mini
-  label: o3-mini
-  size: unknown
+- id: mistralai/mistral-large-3-2512
+  name: Mistral Large 3
+  provider: Mistral
+  country: FR
+  params: 675B MoE (41B active)
+  size_class: large
+  license: open-apache
 
-- id: meta-llama/llama-3.3-70b-instruct
-  label: Llama 3.3 70B
-  size: "70B"
+- id: qwen/qwen3-235b-a22b
+  name: Qwen3 235B
+  provider: Alibaba
+  country: CN
+  params: 235B MoE (22B active)
+  size_class: large
+  license: open-apache
 
-- id: meta-llama/llama-3.1-405b-instruct
-  label: Llama 3.1 405B
-  size: "405B"
+- id: meta-llama/llama-4-maverick
+  name: Llama 4 Maverick
+  provider: Meta
+  country: US
+  params: 400B MoE
+  size_class: large
+  license: open-llama
 
-- id: qwen/qwen-2.5-72b-instruct
-  label: Qwen 2.5 72B
-  size: "72B"
+- id: minimax/minimax-m2.5
+  name: MiniMax M2.5
+  provider: MiniMax
+  country: CN
+  size_class: large
+  license: commercial
 
-- id: qwen/qwq-32b
-  label: QwQ 32B
-  size: "32B"
+- id: moonshotai/kimi-k2.5
+  name: Kimi K2.5
+  provider: Moonshot AI
+  country: CN
+  size_class: large
+  license: commercial
 
-- id: mistralai/mistral-large
-  label: Mistral Large
-  size: "123B"
+# --- Medium ---
 
-- id: x-ai/grok-3
-  label: Grok 3
-  size: unknown
+- id: mistralai/mistral-medium-3.1
+  name: Mistral Medium 3.1
+  provider: Mistral
+  country: FR
+  params: ~70B
+  size_class: medium
+  license: commercial
 
-- id: perplexity/sonar-pro
-  label: Perplexity Pro
-  size: unknown
+- id: qwen/qwen3-32b
+  name: Qwen3 32B
+  provider: Alibaba
+  country: CN
+  params: 32B
+  size_class: medium
+  license: open-apache
 
-- id: nvidia/llama-3.1-nemotron-70b-instruct
-  label: NVidia Nemotron 70B
-  size: "70B"
+- id: nvidia/nemotron-3-nano-30b-a3b
+  name: Nemotron 3 Nano 30B
+  provider: NVIDIA
+  country: US
+  params: 30B (3B active)
+  size_class: medium
+  license: open
+
+# --- Small / Edge ---
+
+- id: mistralai/mistral-small-3.2-24b-instruct-2506
+  name: Mistral Small 3.2
+  provider: Mistral
+  country: FR
+  params: 24B
+  size_class: small
+  license: open-apache
+
+- id: mistralai/ministral-3-8b-2512
+  name: Ministral 3 8B
+  provider: Mistral
+  country: FR
+  params: 8B
+  size_class: edge
+  license: open-apache
+
+- id: google/gemini-2.5-flash-lite
+  name: Gemini 2.5 Flash Lite
+  provider: Google
+  country: US
+  params: ~8B
+  size_class: edge
+  license: commercial
